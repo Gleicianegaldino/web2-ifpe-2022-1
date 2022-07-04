@@ -52,9 +52,11 @@ Atividade em dupla.
 
 Prazo: 13/07/2022
 
-Atividade: Anexar um arquivo em uma aplicação. O anexo do arquivo deve ser tratado em todas as operações do CRUD.
+- Anexar um arquivo em uma aplicação. 
+
+O anexo do arquivo deve ser tratado em todas as operações do CRUD.
+
 Podem reutilizar projetos das tarefas anteriores.
-Entrega: Enviar link do git com comentários.
 
 # Atividade 05 -  Construindo um Relacionamento many-to-many.
 
@@ -62,7 +64,7 @@ Atividade em dupla.
 
 Prazo: 18/07/2022
 
-Criar um relacionamento many-to-many em todas as funções do CRUD.
+- Criar um relacionamento many-to-many em todas as funções do CRUD.
 
 Obs.: Pode reutilizar projeto de atividades anteriores ou criar um novo projeto
 
