@@ -63,5 +63,6 @@ Atividade em dupla.
 Prazo: 18/07/2022
 
 Criar um relacionamento many-to-many em todas as funções do CRUD.
+
 Obs.: Pode reutilizar projeto de atividades anteriores ou criar um novo projeto
 
