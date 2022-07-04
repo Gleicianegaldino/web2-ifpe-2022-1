@@ -24,6 +24,7 @@ Prazo 04/07/2022
 
 Requisitos:
 
+- Construir 1 CRUDs em um contexto a sua escolha (exceto blog) que contenha ao menso 4 campos.
 - Incluir sistema de Login (gerado pelo próprio Laravel)
 
 Opcionais
