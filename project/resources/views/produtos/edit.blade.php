@@ -10,6 +10,21 @@
     </div>
 </div>
 
+
+<!-- Sistema pra exibir mensagens de erro-->
+
+@if ($errors->any())
+	<div class="alert alert-danger">
+		<strong>ops!</strong> There is a problem: <br><br>
+		<ul>
+			@foreach ($errors->all() as $error)
+			<li>{{ $error }}</li>
+			@endforeach
+		</ul>
+	</div>
+@endif
+
+
 <!--Formulario-->
 <form action="{{ route('produtos.update', $produto->id) }}" method="POST">
     @csrf

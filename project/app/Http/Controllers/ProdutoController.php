@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 
@@ -37,9 +38,20 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        Produto::create($request->all());
 
-        return redirect('produtos')->with('successo', 'Produto adicionado com sucesso!');
+        $validatedData = $request->validate ([  
+            'titulo' => ['required','unique:produtos', 'max:150'], 
+            'descricao' => ['required', 'max:150'],
+            'quantidade' => ['required'],
+            'valor' => ['required'],
+        ]);
+
+        $produto = new Produto($validatedData);
+        $produto->save();
+
+        return redirect('produtos')->with('sucesso');
+        
+
     }
 
     /**
@@ -73,9 +85,26 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, Produto $produto)
     {
-        $produto->update($request->all());
 
-        return redirect()->route('produtos.index');
+        $validatedData = $request->validate ([  
+            'titulo' => ['required','unique:produtos', 'max:150'], 
+            'descricao' => ['required', 'max:150'],
+            'quantidade' => ['required'],
+            'valor' => ['required'],
+        ]);
+
+        if($produto->id === Auth::id()){
+            $produto->update($request->all());
+            return redirect()->route('produtos.index')->with('successo', 'Produto adicionado com sucesso!');
+            }else{
+            return redirect()->route('produtos.index')
+                    ->with('erraaaado')
+                    ->withInput();
+            }
+        
+        
+
+       
 
     }
 
