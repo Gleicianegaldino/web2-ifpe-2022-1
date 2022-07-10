@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\Models\Produto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ProdutoController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * 
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -40,12 +42,12 @@ class ProdutoController extends Controller
     {
 
         $validatedData = $request->validate ([  
-            'titulo' => ['required','unique:produtos', 'max:150'], 
-            'descricao' => ['required', 'max:150'],
-            'quantidade' => ['required'],
-            'valor' => ['required'],
+            'titulo' => ['required','alpha', 'distinct', 'unique:produtos', 'min:1', 'max:150'], 
+            'descricao' => ['required', 'alpha_dash', 'min:0', 'max:150'],
+            'quantidade' => ['required', 'integer', 'numeric'],
+            'valor' => ['required', 'numeric'],
         ]);
-
+        
         $produto = new Produto($validatedData);
         $produto->save();
 
@@ -87,10 +89,10 @@ class ProdutoController extends Controller
     {
 
         $validatedData = $request->validate ([  
-            'titulo' => ['required','unique:produtos', 'max:150'], 
-            'descricao' => ['required', 'max:150'],
-            'quantidade' => ['required'],
-            'valor' => ['required'],
+            'titulo' => ['required', 'alpha', 'distinct', Rule::unique('produtos')->ignore($produto), 'min:1', 'max:150'], 
+            'descricao' => ['required', 'alpha_dash', 'min:0', 'max:150'],
+            'quantidade' => ['required', 'integer', 'numeric'],
+            'valor' => ['required', 'numeric'],
         ]);
 
         if($produto->id === Auth::id()){

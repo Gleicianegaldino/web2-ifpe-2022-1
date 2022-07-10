@@ -36,7 +36,7 @@
         <div class="col">
             <div class="form-group">
                 <strong>Título: </strong>
-                <input type="text" name="titulo" class="form-control">
+                <input type="text" name="titulo" class="form-control" value="{{ old('titulo') }}" required maxlength="150">
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
         <div class="col">
             <div class="form-group">
                 <strong>Descrição: </strong>
-                <textarea name="descricao" class="form-control"> </textarea>
+                <textarea name="descricao" class="form-control" required>{{ old('descricao') }}</textarea>
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
         <div class="col">
             <div class="form-group">
                 <strong>Quantidade: </strong>
-                <input type="number" name="quantidade" class="form-control">
+                <input type="number" name="quantidade" class="form-control" value="{{ old('quantidade') }}" required>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@
         <div class="col">
             <div class="form-group">
                 <strong>Valor: </strong>
-                <input type="number" name="valor" class="form-control">
+                <input type="number" name="valor" class="form-control" value="{{ old('valor') }}" required>
             </div>
         </div>
     </div>

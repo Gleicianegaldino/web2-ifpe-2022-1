@@ -34,7 +34,7 @@
         <div class="col">
             <div class="form-group">
                 <strong>Título: </strong>
-                <input type="text" name="titulo" class="form-control" value="{{ $produto->titulo }}">
+                <input type="text" name="titulo" class="form-control" value="{{ $produto->titulo }}" required maxlength="150">
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
         <div class="col">
             <div class="form-group">
                 <strong>Descrição: </strong>
-                <textarea name="descricao" class="form-control"> {{ $produto->descricao }} </textarea>
+                <textarea name="descricao" class="form-control" required>{{ $produto->descricao }}</textarea>
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
         <div class="col">
             <div class="form-group">
                 <strong>Quantidade: </strong>
-                <input type="number" name="quantidade" class="form-control" value="{{ $produto->quantidade }}">
+                <input type="number" name="quantidade" class="form-control" value="{{ $produto->quantidade }}" required>
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
         <div class="col">
             <div class="form-group">
                 <strong>Valor: </strong>
-                <input type="number" name="valor" class="form-control" value="{{ $produto->valor }}">
+                <input type="number" name="valor" class="form-control" value="{{ $produto->valor }}" required>
             </div>
         </div>
     </div>
