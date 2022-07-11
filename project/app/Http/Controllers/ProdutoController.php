@@ -42,7 +42,7 @@ class ProdutoController extends Controller
     {
 
         $validatedData = $request->validate ([  
-            'titulo' => ['required','alpha', 'distinct', 'unique:produtos', 'min:1', 'max:150'], 
+            'titulo' => ['required','alpha', 'distinct', 'unique:produtos', 'min:0', 'max:150'], 
             'descricao' => ['required', 'alpha_dash', 'min:0', 'max:150'],
             'quantidade' => ['required', 'integer', 'numeric'],
             'valor' => ['required', 'numeric'],
@@ -53,7 +53,6 @@ class ProdutoController extends Controller
 
         return redirect('produtos')->with('sucesso');
         
-
     }
 
     /**
@@ -88,25 +87,25 @@ class ProdutoController extends Controller
     public function update(Request $request, Produto $produto)
     {
 
+        $produto->update($request->all());
+
+        return redirect()->route('produtos.index');
+
         $validatedData = $request->validate ([  
-            'titulo' => ['required', 'alpha', 'distinct', Rule::unique('produtos')->ignore($produto), 'min:1', 'max:150'], 
-            'descricao' => ['required', 'alpha_dash', 'min:0', 'max:150'],
-            'quantidade' => ['required', 'integer', 'numeric'],
-            'valor' => ['required', 'numeric'],
+            'titulo' => ['required', 'unique:produtos', 'min:0', 'max:150'], 
+            'descricao' => ['required', 'min:0', 'max:150'],
+            'quantidade' => ['required'],
+            'valor' => ['required'],
         ]);
 
         if($produto->id === Auth::id()){
             $produto->update($request->all());
-            return redirect()->route('produtos.index')->with('successo', 'Produto adicionado com sucesso!');
+            return redirect()->route('produtos.index')->with('success', 'Produto adicionado com sucesso!');
             }else{
             return redirect()->route('produtos.index')
-                    ->with('erraaaado')
+                    ->with('error')
                     ->withInput();
             }
-        
-        
-
-       
 
     }
 

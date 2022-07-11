@@ -1,16 +1,35 @@
 @extends('layouts.app')
 @section('content')
 
-<h2>Produtos</h2>
+<div class="mx-auto" style="width: 800px;">
 
-<ul>
-    <ol>{{ $produto->id }}</ol>
-    <ol>{{ $produto->titulo }}</ol>
-    <ol>{{ $produto->descricao }}</ol>
-    <ol>{{ $produto->quantidade }}</ol>
-    <ol>{{ $produto->valor }}</ol>
-</ul>
+    <div class="row">
+        <div class="col">
+            <div class="pull-left">
+                <h2>Produtos</h2>
+            </div>
+        </div>
+    </div>
 
+    <div class="card ">
+        <div class="card-header">
+            <h1>{{ $produto->titulo }}</h1>
+        </div>
 
+        <div class="card-body">
+            <p class="card-text">{{ $produto->descricao }}</p>
+        </div>
+        <div class="card-footer text-muted">
+            <div class="row">
+                <div class="col-3">Id: {{$produto->id}} </div>
+                <div class="col-3">Quantidade: {{$produto->quantidade}} </div>
+                <div class="col-3">Valor: {{$produto->valor}} </div>
+                <div class="col-3">Created: {{$produto->created_at}} </div>
+                <div class="col-3">Updated: {{$produto->updated_at}} </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 @endsection
