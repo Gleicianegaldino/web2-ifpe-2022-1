@@ -69,6 +69,16 @@
             </div>
         </div>
 
+        <!--Imagem-->
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <strong>Imagem:</strong>
+                    <input id="image" type="file" name="image" class="form-control">
+                </div>
+            </div>
+        </div>
+        <br>
         <!--Submit-->
         <div class="row">
             <div class="col text-center">

@@ -9,8 +9,19 @@ class Produto extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    protected $fillable = [       
     	'titulo' ,'descricao', 'quantidade', 'valor'
     ];
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
+    
+    
+    public function image()
+    {
+        return $this->hasOne('App\Models\Image');
+    }
+    
 
 }

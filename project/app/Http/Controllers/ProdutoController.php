@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Models\Image;
 
 class ProdutoController extends Controller
 {
@@ -46,10 +47,25 @@ class ProdutoController extends Controller
             'descricao' => ['required', 'alpha_dash', 'min:0', 'max:150'],
             'quantidade' => ['required', 'integer', 'numeric'],
             'valor' => ['required', 'numeric'],
+            'image' => ['mimes:jpeg,png' , 'dimensions:min_width=200,min_height=200'],
         ]);
         
         $produto = new Produto($validatedData);
         $produto->save();
+
+        if ($request->hasFile('image') and $request->file('image')->isValid()){
+
+            $extension = $request->image->extension();
+            $image_name = now()-> toDateTimeString()."_".substr(base64_encode(sha1(mt_rand())), 0, 10);
+    
+            $path = $request->image->storeAs('produtos', $image_name.".".$extension, 'public');
+    
+            $image = new Image();
+            $image->produto_id = $produto->id;
+            $image->path = $path;
+            $image->save();
+    
+        }    
 
         return redirect('produtos')->with('sucesso');
         

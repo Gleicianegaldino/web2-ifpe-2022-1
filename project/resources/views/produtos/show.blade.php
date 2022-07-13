@@ -11,6 +11,18 @@
         </div>
     </div>
 
+    @isset($produto->image)
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Imagem:</strong>
+                <img src="{{ asset('storage/'.$produto->image->path) }}">
+
+            </div>
+        </div>
+    </div>
+    @endisset
+
     <div class="card ">
         <div class="card-header">
             <h1>{{ $produto->titulo }}</h1>
