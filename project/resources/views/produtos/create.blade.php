@@ -74,7 +74,7 @@
             <div class="col">
                 <div class="form-group">
                     <strong>Imagem:</strong>
-                    <input id="image" type="file" name="image" class="form-control">
+                    <input id="image" type="file" name="image" class="form-control" value="{{ old('image') }}" required>
                 </div>
             </div>
         </div>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Image;
+use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
@@ -51,6 +52,7 @@ class ProdutoController extends Controller
         ]);
         
         $produto = new Produto($validatedData);
+        $produto->user_id = Auth::id();
         $produto->save();
 
         if ($request->hasFile('image') and $request->file('image')->isValid()){
@@ -67,7 +69,7 @@ class ProdutoController extends Controller
     
         }    
 
-        return redirect('produtos')->with('sucesso');
+        return redirect('produtos')->with('success', 'Produto adicionado com sucesso!');
         
     }
 
@@ -103,21 +105,40 @@ class ProdutoController extends Controller
     public function update(Request $request, Produto $produto)
     {
 
-        $produto->update($request->all());
+        //$produto->update($request->all());
 
-        return redirect()->route('produtos.index');
+        //return redirect()->route('produtos.index');
 
         $validatedData = $request->validate ([  
-            'titulo' => ['required', 'unique:produtos', 'min:0', 'max:150'], 
+            'titulo' => ['required', 'min:0', 'max:150'], 
             'descricao' => ['required', 'min:0', 'max:150'],
             'quantidade' => ['required'],
             'valor' => ['required'],
         ]);
 
-        if($produto->id === Auth::id()){
+        if($produto->user_id === Auth::id()){
             $produto->update($request->all());
-            return redirect()->route('produtos.index')->with('success', 'Produto adicionado com sucesso!');
-            }else{
+
+            if ($request->hasFile('image') and $request->file('image')->isValid()) {
+                //Storage::disk('public')->delete($image->path);
+                $produto->image->delete();
+
+                $extension = $request->image->extension();
+                $image_name = now()->toDateTimeString()."_".substr(base64_encode(sha1(mt_rand())), 0, 10);
+                
+                $path = $request->image->storeAs('produtos', $image_name.".".$extension, 'public');
+                 
+                $image =  new Image();
+                $image->produto_id = $produto->id;
+                $image->path = $path;
+                $image->save();
+
+            }
+            
+            return redirect()->route('produtos.index')->with('success', 'Produto editado com sucesso!');
+            
+        }else{
+            
             return redirect()->route('produtos.index')
                     ->with('error')
                     ->withInput();
@@ -133,8 +154,12 @@ class ProdutoController extends Controller
      */
     public function destroy(Produto $produto)
     {
+        $path = $produto->image->path;
+
         $produto->delete();
 
-        return redirect()->route('produtos.index');
+        Storage::disk('public')->delete($path);
+
+        return redirect()->route('produtos.index')->with('success', 'Produto excluído com sucesso!');;
     }
 }

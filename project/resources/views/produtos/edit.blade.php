@@ -14,23 +14,25 @@
 
 
     <!-- Sistema pra exibir mensagens de erro-->
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Ops!</strong> There is a problem with the data entered: <br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <strong>Ops!</strong> There is a problem with the data entered: <br><br>
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
 
     <!--Formulario-->
-    <form action="{{ route('produtos.update', $produto->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('produtos.update', $produto->id) }}" method="POST"
+        enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
+        <!--Título-->
         <div class="row">
             <div class="col">
                 <div class="form-group">
@@ -41,6 +43,7 @@
             </div>
         </div>
 
+        <!--Descrição-->
         <div class="row">
             <div class="col">
                 <div class="form-group">
@@ -50,6 +53,7 @@
             </div>
         </div>
 
+        <!--Quantidade-->
         <div class="row">
             <div class="col">
                 <div class="form-group">
@@ -60,6 +64,7 @@
             </div>
         </div>
 
+        <!--Valor-->
         <div class="row">
             <div class="col">
                 <div class="form-group">
@@ -69,6 +74,19 @@
             </div>
         </div>
 
+        <!--Imagem-->
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <strong>Imagem:</strong>
+                    <img class="col-2" src="{{ asset('storage/'.$produto->image->path) }}">
+                    <input class="col-8" id="image" type="file" name="image" class="form-control" value="{{ old('image') }}" required>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <!--Submit-->
         <div class="row">
             <div class="col text-center">
                 <button type="submit" class="btn col btn-primary">Editar</button>

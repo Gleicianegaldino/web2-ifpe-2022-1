@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('descricao', 150);
             $table->integer('quantidade');
             $table->float('valor');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
