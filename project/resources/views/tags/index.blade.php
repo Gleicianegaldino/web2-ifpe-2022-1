@@ -28,9 +28,9 @@
         <tr>
             <th>Id</th>
             <th>Nome</th>
-            <th>Action</th>
             <th>Created</th>
             <th>Updated</th>
+            <th>Action</th>
         </tr>
         @foreach ($tags as $tag)
             <tr>
