@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -31,7 +32,9 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        return view('produtos.create');
+        $tags = Tag::all();
+        
+        return view('produtos.create', compact('tags'));
     }
 
     /**
@@ -49,11 +52,14 @@ class ProdutoController extends Controller
             'quantidade' => ['required', 'integer', 'numeric'],
             'valor' => ['required', 'numeric'],
             'image' => ['mimes:jpeg,png' , 'dimensions:min_width=200,min_height=200'],
+            'tags_id' => ['array'],
         ]);
         
         $produto = new Produto($validatedData);
         $produto->user_id = Auth::id();
         $produto->save();
+
+        $produto->tags()->attach($validatedData['tags_id']);
 
         if ($request->hasFile('image') and $request->file('image')->isValid()){
 
@@ -92,7 +98,14 @@ class ProdutoController extends Controller
      */
     public function edit(Produto $produto)
     {
-        return view('produtos.edit', compact('produto'));
+        if($produto->user_id === Auth::id()){
+            $tags = Tag::all();
+            return view('produtos.edit', compact('produto', 'tags'));
+        }else{
+            return redirect()->route('produto.index')
+                            ->with('error', "Não é possível editar esse produto, você não é o autor")
+                            ->withInput();
+        }
     }
 
     /**
@@ -114,10 +127,12 @@ class ProdutoController extends Controller
             'descricao' => ['required', 'min:0', 'max:150'],
             'quantidade' => ['required'],
             'valor' => ['required'],
+            'tags_id' => ['array'],
         ]);
 
         if($produto->user_id === Auth::id()){
             $produto->update($request->all());
+            $produto->tags()->sync($validatedData['tags_id']);
 
             if ($request->hasFile('image') and $request->file('image')->isValid()) {
                 //Storage::disk('public')->delete($image->path);
@@ -142,7 +157,7 @@ class ProdutoController extends Controller
             return redirect()->route('produtos.index')
                     ->with('error')
                     ->withInput();
-            }
+        }
 
     }
 

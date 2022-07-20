@@ -62,14 +62,29 @@
                         required>
                 </div>
             </div>
-        </div>
-
-        <!--Valor-->
-        <div class="row">
+            <!--Valor-->
             <div class="col">
                 <div class="form-group">
                     <strong>Valor: </strong>
                     <input type="number" name="valor" class="form-control" value="{{ $produto->valor }}" required>
+                </div>
+            </div>
+        </div>
+
+        <!--Tag-->
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <strong>Tags: </strong>
+                    <select class="form-select" aria-label="Default select example" name="tags_id[]" multiple>
+                        @foreach($tags as $tag)
+                            @if($produto->tags->contains($tag))
+                                <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+                            @else
+                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>
@@ -80,7 +95,8 @@
                 <div class="form-group">
                     <strong>Imagem:</strong>
                     <img class="col-2" src="{{ asset('storage/'.$produto->image->path) }}">
-                    <input class="col-8" id="image" type="file" name="image" class="form-control" value="{{ old('image') }}" required>
+                    <input class="col-8" id="image" type="file" name="image" class="form-control"
+                        value="{{ $produto->image  }}" required>
                 </div>
             </div>
         </div>

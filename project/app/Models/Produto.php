@@ -22,6 +22,10 @@ class Produto extends Model
     {
         return $this->hasOne('App\Models\Image');
     }
-    
 
+    public function tags()
+    {
+        return $this->belongsToMany('App\Models\Tag')->withTimestamps();
+    }
+    
 }

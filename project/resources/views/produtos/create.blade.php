@@ -12,15 +12,15 @@
     </div>
 
     <!-- Sistema pra exibir mensagens de erro-->
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Ops!</strong> There is a problem with the data entered: <br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <strong>Ops!</strong> There is a problem with the data entered: <br><br>
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
     <!--Formulario-->
@@ -32,8 +32,8 @@
             <div class="col">
                 <div class="form-group">
                     <strong>Título:</strong>
-                    <input type="text" name="titulo" class="form-control" value="{{ old('titulo') }}" required
-                        maxlength="255">
+                    <input type="text" name="titulo" class="form-control" value="{{ old('titulo') }}"
+                        required maxlength="255">
                 </div>
             </div>
         </div>
@@ -43,7 +43,8 @@
             <div class="col">
                 <div class="form-group">
                     <strong>Descrição: </strong>
-                    <textarea name="descricao" class="form-control" required>{{ old('descricao') }}</textarea>
+                    <textarea name="descricao" class="form-control"
+                        required>{{ old('descricao') }}</textarea>
                 </div>
             </div>
         </div>
@@ -53,18 +54,30 @@
             <div class="col">
                 <div class="form-group">
                     <strong>Quantidade: </strong>
-                    <input type="number" name="quantidade" class="form-control" value="{{ old('quantidade') }}"
+                    <input type="number" name="quantidade" class="form-control"
+                        value="{{ old('quantidade') }}" required>
+                </div>
+            </div>
+            <!--Valor-->
+            <div class="col">
+                <div class="form-group">
+                    <strong>Valor: </strong>
+                    <input type="number" name="valor" class="form-control" value="{{ old('valor') }}"
                         required>
                 </div>
             </div>
         </div>
 
-        <!--Valor-->
+        <!--Tag-->
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <strong>Valor: </strong>
-                    <input type="number" name="valor" class="form-control" value="{{ old('valor') }}" required>
+                    <strong>Tags: </strong>
+                    <select class="form-select" aria-label="Default select example" name="tags_id[]" multiple>
+                        @foreach($tags as $tag)
+                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>
@@ -74,12 +87,14 @@
             <div class="col">
                 <div class="form-group">
                     <strong>Imagem:</strong>
-                    <input id="image" type="file" name="image" class="form-control" value="{{ old('image') }}" required>
+                    <input id="image" type="file" name="image" class="form-control"
+                        value="{{ old('image') }}" required>
                 </div>
             </div>
         </div>
-        <br>
+
         <!--Submit-->
+        <br>
         <div class="row">
             <div class="col text-center">
                 <button type="submit" class="btn col btn-primary">Adicionar</button>
